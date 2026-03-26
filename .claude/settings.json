@@ -52,6 +52,7 @@
       "WebSearch"
     ],
     "deny": [
+      "Bash(bash -c:*)",
       "Bash(git commit --no-verify*)"
     ],
     "ask": [
@@ -113,16 +114,6 @@
           {
             "type": "command",
             "command": "bash .claude/hooks/post-mago-annotation-guard.sh"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/stop-quality-check.sh"
           }
         ]
       }
