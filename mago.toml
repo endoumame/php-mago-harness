@@ -1,0 +1,538 @@
+php-version = "8.5"
+
+[source]
+paths = ["src", "tests", "config", "public"]
+includes = ["vendor"]
+
+# =============================================================================
+# [formatter] フォーマッタ設定
+# =============================================================================
+# 一貫性のある統一されたコードスタイルを強制
+[formatter]
+preset = "default"
+
+# =============================================================================
+# [linter] リンター設定
+# =============================================================================
+[linter]
+integrations = ["php-unit"]
+minimum-fail-level = "note"
+
+# =============================================================================
+# [linter.rules] リンタールール設定
+# =============================================================================
+# 全カテゴリから関連する全ルールを最大限厳格に設定
+[linter.rules]
+
+# ---------------------------------------------------------------------------
+# ◆ Best Practices（ベストプラクティス）
+# ---------------------------------------------------------------------------
+# スキル: package-design, clean-architecture, domain-building-blocks
+
+# domain-primitives-and-always-valid: 1ファイル1クラスでドメインプリミティブを明確に分離
+single-class-per-file = { enabled = true, level = "error" }
+
+# package-design: 名前空間を必須にしてパッケージ境界を強制
+require-namespace = { enabled = true, level = "error" }
+
+# clean-architecture, domain-model-first: インラインコード禁止（PHPタグ外のテキスト）
+no-inline = { enabled = true, level = "error" }
+
+# error-handling: eval禁止（安全でないコード実行の防止）
+# tell-dont-ask: スプリントフォーマットの連結を禁止（意図を明確に）
+no-sprintf-concat = { enabled = true, level = "error" }
+
+# tell-dont-ask, law-of-demeter: 静的クロージャを推奨（$this への暗黙的な結合を防止）
+prefer-static-closure = { enabled = true, level = "error" }
+
+# parse-dont-validate: アロー関数を推奨（関数型スタイル）
+prefer-arrow-function = { enabled = true, level = "error" }
+
+# error-handling: 早期 continue を推奨（ネスト削減）
+prefer-early-continue = { enabled = true, level = "error" }
+
+# tell-dont-ask: first-class callable を推奨（高階関数の明示的な使用）
+prefer-first-class-callable = { enabled = true, level = "error" }
+
+# aggregate-design: pre-increment を推奨（意図の明確化）
+prefer-pre-increment = { enabled = true, level = "error" }
+
+# first-class-collection: while ループの適切な使用を推奨
+prefer-while-loop = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: インターフェースを推奨（抽象に依存）
+prefer-interface = { enabled = true, level = "error" }
+
+# error-handling: 複合代入を使用（冗長性の削減）
+use-compound-assignment = { enabled = true, level = "error" }
+
+# aggregate-design: 連続 isset の結合
+combine-consecutive-issets = { enabled = true, level = "error" }
+
+# clean-architecture: DB クエリの直接使用を禁止（リポジトリパターン強制）
+no-direct-db-query = { enabled = true, level = "error" }
+
+# safety: ini_set の使用を禁止（実行時設定変更の禁止）
+no-ini-set = { enabled = true, level = "error" }
+
+# aggregate-design, tell-dont-ask: Yoda条件を検出（可読性の低下）
+# yoda-conditions = { enabled = true, level = "error" }
+
+# domain-model-first: ループが反復しない場合を検出（論理バグ）
+loop-does-not-iterate = { enabled = true, level = "error" }
+
+# clean-architecture: 匿名マイグレーションを推奨
+prefer-anonymous-migration = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Clarity（明瞭性）
+# ---------------------------------------------------------------------------
+# スキル: tell-dont-ask, law-of-demeter, parse-dont-validate
+
+# tell-dont-ask: empty() の使用を禁止（暗黙的な型変換による曖昧さ）
+no-empty = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: isset() の使用を禁止（null 安全な型設計を強制）
+no-isset = { enabled = true, level = "error" }
+
+# parse-dont-validate: 変数の変数を禁止（型安全性の破壊）
+no-variable-variable = { enabled = true, level = "error" }
+
+# law-of-demeter: ネストされた三項演算子を禁止（連鎖呼び出しと同じ問題）
+no-nested-ternary = { enabled = true, level = "error" }
+
+# tell-dont-ask: 短縮三項演算子を禁止（暗黙的な挙動）
+no-shorthand-ternary = { enabled = true, level = "error" }
+
+# aggregate-design: 短縮 bool キャストを禁止（型の明示的な変換を強制）
+no-short-bool-cast = { enabled = true, level = "error" }
+
+# aggregate-design: 複数代入を禁止（1文1操作の明確さ）
+no-multi-assignments = { enabled = true, level = "error" }
+
+# parse-dont-validate: 明示的な8進数表記を強制
+explicit-octal = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: Stringable の instanceof チェック
+instanceof-stringable = { enabled = true, level = "error" }
+
+# parse-dont-validate: リテラル名前付き引数の使用を推奨（意図の明確化）
+literal-named-argument = { enabled = true, level = "error" }
+
+# error-handling: 可読リテラルを強制（大きな数値にアンダースコア区切り）
+readable-literal = { enabled = true, level = "error" }
+
+# domain-model-first: FIXME/TODO にタグを要求（追跡可能性）
+tagged-fixme = { enabled = true, level = "error" }
+tagged-todo = { enabled = true, level = "error" }
+
+# clean-architecture: str_contains / str_starts_with を推奨
+str-contains = { enabled = true, level = "error" }
+str-starts-with = { enabled = true, level = "error" }
+
+# clean-architecture: 有効な docblock を要求
+valid-docblock = { enabled = true, level = "error" }
+
+# clarity: ハッシュ絵文字を禁止（コードの明瞭性）
+no-hash-emoji = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Consistency（一貫性）
+# ---------------------------------------------------------------------------
+# スキル: package-design, ddd-module-pattern, breach-encapsulation-naming
+
+# ddd-module-pattern, breach-encapsulation-naming: 命名規約を厳格に強制
+class-name = { enabled = true, level = "error" }
+interface-name = { enabled = true, level = "error" }
+enum-name = { enabled = true, level = "error" }
+trait-name = { enabled = true, level = "error" }
+function-name = { enabled = true, level = "error" }
+constant-name = { enabled = true, level = "error" }
+property-name = { enabled = true, level = "error" }
+variable-name = { enabled = true, level = "error" }
+
+# package-design: ファイル名の一貫性を強制
+file-name = { enabled = true, level = "error" }
+
+# clean-architecture: 構文の一貫性
+lowercase-keyword = { enabled = true, level = "error" }
+lowercase-type-hint = { enabled = true, level = "error" }
+no-hash-comment = { enabled = true, level = "error" }
+no-php-tag-terminator = { enabled = true, level = "error" }
+no-trailing-space = { enabled = true, level = "error" }
+no-alternative-syntax = { enabled = true, level = "error" }
+no-alias-function = { enabled = true, level = "error" }
+
+# consistency: 配列スタイルの統一
+array-style = { enabled = true, level = "error" }
+
+# consistency: ブロック文の一貫性
+block-statement = { enabled = true, level = "error" }
+
+# consistency: 文字列補間の一貫性
+braced-string-interpolation = { enabled = true, level = "error" }
+
+# consistency: アサーションスタイルの統一
+assertion-style = { enabled = true, level = "error" }
+
+# consistency: 曖昧な関数呼び出しの検出
+ambiguous-function-call = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Correctness（正確性）
+# ---------------------------------------------------------------------------
+# スキル: domain-primitives-and-always-valid, error-handling, error-classification
+
+# domain-primitives-and-always-valid: strict_types を必須に（型安全性の最重要ルール）
+strict-types = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: 厳格な振る舞いを強制
+strict-behavior = { enabled = true, level = "error" }
+
+# error-handling: 厳格なアサーションを強制
+strict-assertions = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: 同一性比較（===）を強制
+identity-comparison = { enabled = true, level = "error" }
+
+# error-handling: 条件文内の代入を禁止
+no-assign-in-condition = { enabled = true, level = "error" }
+
+# error-handling: 引数内の代入を禁止
+no-assign-in-argument = { enabled = true, level = "error" }
+
+# error-classification: 空の catch 句を禁止（エラーの握りつぶし防止）
+no-empty-catch-clause = { enabled = true, level = "error" }
+
+# correctness: switch 内の continue を break に変換
+switch-continue-to-break = { enabled = true, level = "error" }
+
+# correctness: assert の説明を要求
+assert-description = { enabled = true, level = "error" }
+
+# correctness: 無効な開始タグを検出
+invalid-open-tag = { enabled = true, level = "error" }
+
+# domain-model-first: 特定のアサーションを使用
+use-specific-assertions = { enabled = true, level = "error" }
+
+# correctness: 無効な format ignore を検出
+ineffective-format-ignore-next = { enabled = true, level = "error" }
+ineffective-format-ignore-region = { enabled = true, level = "error" }
+
+# domain-model-first: テストの .only() を禁止
+no-only = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Safety（安全性）
+# ---------------------------------------------------------------------------
+# スキル: error-handling, error-classification, clean-architecture
+
+# error-handling: エラー制御演算子（@）を禁止（エラーの握りつぶし防止）
+no-error-control-operator = { enabled = true, level = "error" }
+
+# safety: eval() を禁止（コード注入の防止）
+no-eval = { enabled = true, level = "error" }
+
+# clean-architecture: FFI を禁止（外部依存の制限）
+no-ffi = { enabled = true, level = "error" }
+
+# clean-architecture: global 変数を禁止（カプセル化の強制）
+no-global = { enabled = true, level = "error" }
+
+# clean-architecture: $_REQUEST の直接アクセスを禁止
+no-request-all = { enabled = true, level = "error" }
+no-request-variable = { enabled = true, level = "error" }
+
+# safety: シェルコマンド文字列実行を禁止
+no-shell-execute-string = { enabled = true, level = "error" }
+
+# error-handling: unsafe な finally ブロックを禁止
+no-unsafe-finally = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Security（セキュリティ）
+# ---------------------------------------------------------------------------
+# スキル: error-handling, clean-architecture, backward-compat-governance
+
+# security: デバッグシンボルの残存を禁止（本番コードの品質）
+no-debug-symbols = { enabled = true, level = "error" }
+
+# security: ハードコードされたパスワードを禁止
+no-literal-password = { enabled = true, level = "error" }
+
+# domain-primitives-and-always-valid: 安全でない比較を禁止
+no-insecure-comparison = { enabled = true, level = "error" }
+
+# security: 短縮開始タグを禁止
+no-short-opening-tag = { enabled = true, level = "error" }
+
+# security: エスケープされていない出力を禁止（XSS 防止）
+no-unescaped-output = { enabled = true, level = "error" }
+
+# security: preg_quote デリミタを要求
+require-preg-quote-delimiter = { enabled = true, level = "error" }
+
+# security: センシティブパラメータの明示
+sensitive-parameter = { enabled = true, level = "error" }
+
+# security: 汚染データのシンク追跡
+tainted-data-to-sink = { enabled = true, level = "error" }
+
+# security: DB スキーマ変更を禁止（マイグレーション経由を強制）
+no-db-schema-change = { enabled = true, level = "error" }
+
+# security: ロールベースではなくケイパビリティベースのアクセス制御
+no-roles-as-capabilities = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Security: 禁止関数リスト
+# ---------------------------------------------------------------------------
+# スキル: error-handling, safety, clean-architecture, tell-dont-ask
+#
+# 以下の関数を禁止する理由:
+# - var_dump, print_r, debug_zval_dump, var_export: デバッグコードの残存防止
+# - extract, compact: カプセル化の破壊（変数スコープの汚染）
+# - exec, system, passthru, shell_exec, popen, proc_open: コマンドインジェクション防止
+# - die, exit: 適切なエラーハンドリングを強制（error-classification スキル）
+# - serialize, unserialize: オブジェクトインジェクション防止
+# - create_function: eval 相当の動的関数生成を禁止
+# - call_user_func, call_user_func_array: first-class callable を使用すべき
+# - settype, intval, floatval, strval, boolval: ドメインプリミティブによる型変換を強制
+# - trigger_error: 適切な例外/Result型を使用すべき
+# - compact: 暗黙的な変数バインディングを禁止
+# - func_get_args, func_get_arg, func_num_args: 可変長引数の型安全な宣言を強制
+# - ini_set: 実行時設定変更を禁止（予測可能性の確保）
+#
+disallowed-functions = { enabled = true, level = "error", functions = [
+    # デバッグ関数 — 本番コードに残してはならない
+    "var_dump",
+    "print_r",
+    "debug_zval_dump",
+    "var_export",
+    "debug_print_backtrace",
+    "phpinfo",
+
+    # 危険な実行関数 — コマンドインジェクション防止
+    "exec",
+    "system",
+    "passthru",
+    "shell_exec",
+    "popen",
+    "proc_open",
+    "pcntl_exec",
+
+    # カプセル化破壊 — extract はスコープを汚染する
+    "extract",
+    "compact",
+
+    # 安全でないシリアライズ — オブジェクトインジェクション防止
+    "unserialize",
+    "create_function",
+
+    # 非構造化エラーハンドリング — error-classification スキル違反
+    "die",
+    "exit",
+    "trigger_error",
+    "user_error",
+
+    # 動的呼び出し — first-class callable を使うべき
+    "call_user_func",
+    "call_user_func_array",
+
+    # 暗黙的な型変換 — domain-primitives スキル違反
+    "settype",
+
+    # 可変長引数 — 型安全な宣言を使うべき
+    "func_get_args",
+    "func_get_arg",
+    "func_num_args",
+
+    # 実行時設定変更 — 予測可能性の破壊
+    "ini_set",
+    "ini_restore",
+    "ini_alter",
+
+    # 出力バッファ操作 — 予測不能な副作用
+    "ob_start",
+    "ob_end_flush",
+    "ob_end_clean",
+
+    # 動的クラス/関数定義 — 静的解析不可能
+    "class_alias",
+
+    # sleep 系 — ビジネスロジック内での使用を禁止
+    "sleep",
+    "usleep",
+    "time_nanosleep",
+] }
+
+# ---------------------------------------------------------------------------
+# ◆ Maintainability（保守性）
+# ---------------------------------------------------------------------------
+# スキル: aggregate-design, package-design, clean-architecture
+
+# aggregate-design (Vernon Rule 2): 集約を小さく保つ — 循環的複雑度を厳格に制限
+# 閾値 5: 1メソッドあたりの分岐を最小限に。Tell Don't Ask を強制。
+cyclomatic-complexity = { enabled = true, level = "error", threshold = 5 }
+
+# aggregate-design: Halstead メトリクス — 認知的複雑さを制限
+# effort-threshold 5000: コードの理解に要する労力を制限
+# difficulty-threshold 10: 1メソッドの難易度を制限
+# volume-threshold 2000: 1メソッドの情報量を制限
+halstead = { enabled = true, level = "error", effort-threshold = 5000, difficulty-threshold = 10, volume-threshold = 2000 }
+
+# aggregate-design: KAN 欠陥予測 — バグ予測閾値を厳格に
+# threshold 1.5: 欠陥が予測されるコードを早期に検出
+kan-defect = { enabled = true, level = "error", threshold = 1.5 }
+
+# law-of-demeter: 過剰なネストを禁止（デフォルトより厳しく）
+excessive-nesting = { enabled = true, level = "error" }
+
+# aggregate-design (Vernon Rule 2): パラメータ数を制限
+# 完全コンストラクタの引数も含め、多すぎるパラメータは設計の問題
+excessive-parameter-list = { enabled = true, level = "error", threshold = 10 }
+
+# tell-dont-ask: bool フラグパラメータを禁止
+# ポリモーフィズムまたはストラテジーパターンで置き換えるべき
+no-boolean-flag-parameter = { enabled = true, level = "error" }
+
+# error-handling: else 句を禁止（早期リターンを強制）
+no-else-clause = { enabled = true, level = "error" }
+
+# clean-architecture: goto を禁止
+no-goto = { enabled = true, level = "error" }
+
+# aggregate-design (Vernon Rule 2): 集約を小さく保つ
+# メソッド数を厳格に制限 — 1クラスの責務を限定
+too-many-methods = { enabled = true, level = "error", threshold = 10 }
+
+# aggregate-design (Vernon Rule 2): プロパティ数を厳格に制限
+# 集約の状態を最小限に保つ
+too-many-properties = { enabled = true, level = "error", threshold = 7 }
+
+# aggregate-design: enum ケース数を制限
+too-many-enum-cases = { enabled = true, level = "error", threshold = 15 }
+
+# ---------------------------------------------------------------------------
+# ◆ Redundancy（冗長性）
+# ---------------------------------------------------------------------------
+# スキル: intent-based-dedup, clean-architecture
+
+# 全冗長性ルールを有効化 — 無駄なコードを徹底排除
+no-closing-tag = { enabled = true, level = "error" }
+no-empty-comment = { enabled = true, level = "error" }
+no-empty-loop = { enabled = true, level = "error" }
+no-noop = { enabled = true, level = "error" }
+no-protected-in-final = { enabled = true, level = "error" }
+no-redundant-binary-string-prefix = { enabled = true, level = "error" }
+no-redundant-block = { enabled = true, level = "error" }
+no-redundant-continue = { enabled = true, level = "error" }
+no-redundant-file = { enabled = true, level = "error" }
+no-redundant-final = { enabled = true, level = "error" }
+no-redundant-isset = { enabled = true, level = "error" }
+no-redundant-label = { enabled = true, level = "error" }
+no-redundant-literal-return = { enabled = true, level = "error" }
+no-redundant-math = { enabled = true, level = "error" }
+no-redundant-method-override = { enabled = true, level = "error" }
+no-redundant-nullsafe = { enabled = true, level = "error" }
+no-redundant-parentheses = { enabled = true, level = "error" }
+no-redundant-readonly = { enabled = true, level = "error" }
+no-redundant-string-concat = { enabled = true, level = "error" }
+no-redundant-use = { enabled = true, level = "error" }
+no-redundant-write-visibility = { enabled = true, level = "error" }
+no-redundant-yield-from = { enabled = true, level = "error" }
+no-self-assignment = { enabled = true, level = "error" }
+constant-condition = { enabled = true, level = "error" }
+inline-variable-return = { enabled = true, level = "error" }
+
+# ---------------------------------------------------------------------------
+# ◆ Deprecation（非推奨パターン）
+# ---------------------------------------------------------------------------
+# スキル: backward-compat-governance
+
+# 全非推奨ルールを有効化 — 非推奨パターンを完全排除
+deprecated-cast = { enabled = true, level = "error" }
+deprecated-shell-execute-string = { enabled = true, level = "error" }
+deprecated-switch-semicolon = { enabled = true, level = "error" }
+explicit-nullable-param = { enabled = true, level = "error" }
+no-underscore-class = { enabled = true, level = "error" }
+no-void-reference-return = { enabled = true, level = "error" }
+optional-param-order = { enabled = true, level = "error" }
+
+# =============================================================================
+# [analyzer] 静的解析設定
+# =============================================================================
+# スキル: domain-primitives-and-always-valid, error-handling,
+#         clean-architecture, aggregate-design
+#
+# 全オプションを最大限厳格に設定
+[analyzer]
+# 全ての問題を "note" レベルで報告 — 最高の厳格さでコード品質を向上
+minimum-fail-level = "note"
+
+# 未使用式の検出 — 副作用のない式を禁止
+find-unused-expressions = true
+
+# 未使用定義の検出 — デッドコードの完全排除
+find-unused-definitions = true
+
+# デッドコード分析 — 到達不能コードの検出
+analyze-dead-code = true
+
+# @override チェック — 継承関係の明示を強制
+# aggregate-design: 集約ルートの責任を明確にする
+check-missing-override = true
+
+# 未使用パラメータの検出 — インターフェース分離原則
+find-unused-parameters = true
+
+# 型ヒントの必須化 — domain-primitives-and-always-valid の根幹
+# 全ての関数・メソッドに型宣言を強制する
+check-missing-type-hints = true
+
+# クロージャの型ヒント必須化 — 例外なく型を強制
+check-closure-missing-type-hints = true
+
+# アロー関数の型ヒント必須化 — 例外なく型を強制
+check-arrow-function-missing-type-hints = true
+
+# 厳格なリストインデックスチェック — 配列アクセスの安全性
+strict-list-index-checks = true
+
+# bool リテラル比較の禁止 — if ($x === true) → if ($x)
+no-boolean-literal-comparison = true
+
+# 未定義配列キーを許容しない — parse-dont-validate
+allow-possibly-undefined-array-keys = false
+
+# 存在チェックを信頼しない — 厳格な型推論
+trust-existence-checks = false
+
+# use 文のチェック — 未使用 import の検出
+check-use-statements = true
+
+# 例外ハンドリングの検証 — error-classification スキル
+# 未キャッチの例外を報告する
+check-throws = true
+
+# プロパティ初期化の検証 — aggregate-design (完全コンストラクタ)
+# 全プロパティがコンストラクタで初期化されていることを確認
+check-property-initialization = true
+
+# クラスの final 強制 — aggregate-design (Evans Rule: 集約の保護)
+# 全クラスを final, abstract, または @api のいずれかにする
+enforce-class-finality = true
+
+# @api/@internal の要求 — package-design (公開API境界の明確化)
+# 抽象クラス/インターフェース/トレイトに @api または @internal を要求
+require-api-or-internal = true
+
+# スーパーグローバルの登録を無効化 — clean-architecture (ドメイン層の純粋性)
+# $_GET, $_POST 等の使用を検出可能にする
+register-super-globals = false
+
+# ・missing-constructor：型指定されたプロパティを持つクラスにおいて、それらを初期化するコンストラクタが存在しない場合。 ・uninitialized-property：型指定されたプロパティがコンストラクタ内で初期化されていない場合。
+# 「class-initializers」設定を使用すると、初期化メソッドとして扱うべき追加のメソッドを指定できます。これらのメソッド内で初期化されたプロパティは、__construct内と同様に「確実に初期化されている」ものとみなされます。これは、以下のようなライフサイクルメソッドを利用するフレームワークにおいて便利です。
+# ・PHPUnitのテストクラスにおけるsetUp()メソッド ・フレームワーク固有のboot()やinitialize()メソッド
+class-initializers = ["setUp"]

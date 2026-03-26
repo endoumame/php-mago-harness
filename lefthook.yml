@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: ./vendor/bin/mago lint
+    format-check:
+      run: ./vendor/bin/mago format --check
+    analyze:
+      run: ./vendor/bin/mago analyze
+    test-unit:
+      run: ./vendor/bin/phpunit --testsuite Unit
+    test-property:
+      run: ./vendor/bin/phpunit --testsuite Property
+    test-integration:
+      run: ./vendor/bin/phpunit --testsuite Integration

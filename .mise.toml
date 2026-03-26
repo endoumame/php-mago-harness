@@ -1,0 +1,46 @@
+[tools]
+php = "8.5"
+
+[tasks.test]
+description = "Run all PHPUnit tests"
+run = "./vendor/bin/phpunit"
+
+[tasks."test:unit"]
+description = "Run unit tests only"
+run = "./vendor/bin/phpunit --testsuite Unit"
+
+[tasks."test:property"]
+description = "Run property-based tests only"
+run = "./vendor/bin/phpunit --testsuite Property"
+
+[tasks."test:integration"]
+description = "Run integration tests only"
+run = "./vendor/bin/phpunit --testsuite Integration"
+
+[tasks.lint]
+description = "Run mago linter"
+run = "./vendor/bin/mago lint"
+
+[tasks.format]
+description = "Run mago formatter"
+run = "./vendor/bin/mago format"
+
+[tasks."format:check"]
+description = "Check formatting without modifying files"
+run = "./vendor/bin/mago format --check"
+
+[tasks.analyze]
+description = "Run mago static analyzer"
+run = "./vendor/bin/mago analyze"
+
+[tasks.check]
+description = "Run all checks (lint, format check, analyze, test)"
+depends = ["lint", "format:check", "analyze", "test"]
+
+[tasks."lefthook:install"]
+description = "Install lefthook git hooks"
+run = "lefthook install"
+
+[tasks.serve]
+description = "Start PHP built-in development server"
+run = "php -S localhost:8080 -t public"

@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "env": {
+    "MAX_THINKING_TOKENS": "32000",
+    "CLAUDE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1"
+  },
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Skill",
+      "Bash(cat:*)",
+      "Bash(composer info:*)",
+      "Bash(composer show:*)",
+      "Bash(composer validate:*)",
+      "Bash(dig:*)",
+      "Bash(du:*)",
+      "Bash(find:*)",
+      "Bash(gh run list:*)",
+      "Bash(git init:*)",
+      "Bash(grep:*)",
+      "Bash(jq:*)",
+      "Bash(ls:*)",
+      "Bash(lsof:*)",
+      "Bash(paste:*)",
+      "Bash(php:*)",
+      "Bash(ps:*)",
+      "Bash(sort:*)",
+      "Bash(tail:*)",
+      "Bash(tree:*)",
+      "Bash(vendor/bin/mago:*)",
+      "Bash(vendor/bin/phpunit:*)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:packagist.org)",
+      "WebFetch(domain:php.net)",
+      "WebFetch(domain:platform.claude.com)",
+      "WebFetch(domain:pure.md)",
+      "WebFetch(domain:qiita.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:www.anthropic.com)",
+      "WebFetch(domain:www.php.net)",
+      "WebFetch(domain:www.slimframework.com)",
+      "WebFetch(domain:zenn.dev)",
+      "WebSearch"
+    ],
+    "deny": [
+      "Bash(git commit --no-verify*)"
+    ],
+    "ask": [
+      "Bash(rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git rebase:*)",
+      "Bash(curl:*)",
+      "Bash(xargs:*)"
+    ]
+  },
+  "model": "opus",
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "WebSearch",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '⚠️ Web 検索時は必ず「2026」を含めること' >&2"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/pre-protected-file-guard.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/install_pkgs.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-php-lint.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/post-mago-annotation-guard.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/stop-quality-check.sh"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/user-prompt-secret-guard.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "commit-commands@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true
+  },
+  "outputStyle": "Explanatory",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "alwaysThinkingEnabled": true
+}
