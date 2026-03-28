@@ -1,5 +1,6 @@
 [tools]
 php = "8.5"
+lefthook = "latest"
 
 [tasks.test]
 description = "Run all PHPUnit tests"
