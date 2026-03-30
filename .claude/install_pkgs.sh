@@ -53,8 +53,44 @@ cd "$CLAUDE_PROJECT_DIR"
 composer install --no-interaction --prefer-dist
 
 # -------------------------------------------------------
-# lefthook のインストール
+# mise のインストール（GitHub Releases から直接取得）
 # -------------------------------------------------------
+# CC on Web 環境ではプロキシにより mise.run がブロックされるため、
+# 公式ドキュメントの GitHub Releases 方式でバイナリを直接取得する。
+# ref: https://mise.jdx.dev/installing-mise.html#github-releases
+# -------------------------------------------------------
+if ! command -v mise &>/dev/null; then
+  MISE_VERSION=$(curl -fsSL https://api.github.com/repos/jdx/mise/releases/latest \
+    | grep '"tag_name"' | sed 's/.*"v\(.*\)".*/\1/')
+  curl -fsSL "https://github.com/jdx/mise/releases/download/v${MISE_VERSION}/mise-v${MISE_VERSION}-linux-x64" \
+    -o /usr/local/bin/mise
+  chmod +x /usr/local/bin/mise
+fi
+
+# -------------------------------------------------------
+# mise のセットアップ（activate → trust → install）
+# -------------------------------------------------------
+# activate: 現在のシェルセッションで mise を有効化し、
+#           mise 管理ツールを PATH に追加する
+# trust:    .mise.toml を信頼済みとしてマークし、
+#           env やテンプレートなどの機能を有効にする
+# install:  .mise.toml の [tools] セクションに定義された
+#           ツール（php, lefthook 等）をインストールする
+#
+# CC on Web 環境では以下の制約があるため一部ツールの
+# インストールが失敗する場合がある:
+#   - GitHub API レート制限によるアーティファクト検証失敗
+#   - プロキシによる asdf プラグインの git clone ブロック
+# PHP は上記セクションで手動インストール済みのため、
+# mise install の失敗は致命的ではない。
+# -------------------------------------------------------
+eval "$(mise activate bash)"
+mise trust --all
+mise install --yes || true
+
+# lefthook の git hooks をセットアップ
+# （mise install 成功時は mise 管理の lefthook を使用、
+#   失敗時は npm グローバルインストールにフォールバック）
 if ! command -v lefthook &>/dev/null; then
   npm install -g @evilmartians/lefthook
 fi
