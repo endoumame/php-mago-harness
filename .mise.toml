@@ -38,6 +38,9 @@ run = "./vendor/bin/mago analyze"
 description = "Run all checks (lint, format check, analyze, test)"
 depends = ["lint", "format:check", "analyze", "test"]
 
+[hooks]
+postinstall = "lefthook install"
+
 [tasks."lefthook:install"]
 description = "Install lefthook git hooks"
 run = "lefthook install"
