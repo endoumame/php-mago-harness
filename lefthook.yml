@@ -13,3 +13,14 @@ pre-commit:
       run: ./vendor/bin/phpunit --testsuite Property
     test-integration:
       run: ./vendor/bin/phpunit --testsuite Integration
+
+prepare-commit-msg:
+  jobs:
+    - name: add-co-author-on-web
+      run: |
+        if [ "$CLAUDE_CODE_REMOTE" = "true" ] \
+          && [ -n "$GIT_CO_AUTHOR_NAME" ] \
+          && [ -n "$GIT_CO_AUTHOR_EMAIL" ] \
+          && ! grep -q "Co-authored-by: $GIT_CO_AUTHOR_NAME" {1}; then
+          printf "\nCo-authored-by: %s <%s>\n" "$GIT_CO_AUTHOR_NAME" "$GIT_CO_AUTHOR_EMAIL" >> {1}
+        fi
